@@ -1,3 +1,4 @@
+import item
 
 
 class GildedRose(object):
@@ -16,11 +17,9 @@ class GildedRose(object):
                     item.quality += 1
                     if item.name == "Backstage passes to a TAFKAL80ETC concert":
                         if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality += 1
+                            self.quality_increase()
                         if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality += 1
+                            self.quality_increase()
             if item.name != "Sulfuras, Hand of Ragnaros":
                 item.sell_in -= 1
             if item.sell_in < 0:
@@ -32,5 +31,8 @@ class GildedRose(object):
                     else:
                         item.quality -= item.quality
                 else:
-                    if item.quality < 50:
-                        item.quality += 1
+                    self.quality_increase()
+
+    def quality_increase(self):
+        if item.quality < 50:
+            item.quality += 1
