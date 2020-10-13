@@ -6,30 +6,32 @@ class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
-    def update_quality(self):
+    def item_loop(self):
         for item in self.items:
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.name != "Sulfuras, Hand of Ragnaros":
-                    self.quality_decrease()
-            else:
-                if item.quality < 50:
-                    item.quality += 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            self.quality_increase()
-                        if item.sell_in < 6:
-                            self.quality_increase()
+            self.update_quality(item)
+
+    def update_quality(self,item):
+        self.sellin()
+        if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
             if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in -= 1
-            if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.name != "Sulfuras, Hand of Ragnaros":
-                            self.quality_decrease()
-                    else:
-                        item.quality -= item.quality
+                self.quality_decrease()
+        else:
+            if item.quality < 50:
+                item.quality += 1
+                if item.name == "Backstage passes to a TAFKAL80ETC concert":
+                    if item.sell_in < 11:
+                        self.quality_increase()
+                    if item.sell_in < 6:
+                        self.quality_increase()
+        if item.sell_in < 0:
+            if item.name != "Aged Brie":
+                if item.name != "Backstage passes to a TAFKAL80ETC concert":
+                    if item.name != "Sulfuras, Hand of Ragnaros":
+                        self.quality_decrease()
                 else:
-                    self.quality_increase()
+                    item.quality -= item.quality
+            else:
+                self.quality_increase()
 
     def quality_increase(self):
         if item.quality < 50:
@@ -38,3 +40,7 @@ class GildedRose(object):
     def quality_decrease(self):
         if item.quality > 0:
             item.quality -= 1
+
+    def sellin(self):
+        if item.name != "Sulfuras, Hand of Ragnaros":
+            item.sell_in -= 1
